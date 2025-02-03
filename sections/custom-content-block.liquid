@@ -1,0 +1,180 @@
+{% schema %}
+{
+  "name": "Customizable Product Grid",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image",
+          "info": "Upload an image for the product."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Title",
+          "default": "Title",
+          "info": "Enter the product title."
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Product Price",
+          "default": "Price",
+          "info": "Enter the product price."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Button Text",
+          "info": "Enter the text for the button."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customizable Product Grid",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="shop-container">
+  {% for block in section.blocks %}
+    <div class="shop-item">
+      {% if block.settings.image %}
+        <div class="shop-image">
+          <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.title }}">
+        </div>
+      {% endif %}
+      <h3>{{ block.settings.title }}</h3>
+      {% if block.settings.price %}
+        <p class="price">{{ block.settings.price }}</p>
+      {% endif %}
+      <button class="shop-btn">{{ block.settings.button_text }}</button>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+  /* Main container */
+  .shop-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusts based on number of items */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    justify-items: center; /* Ensures items are centered */
+  }
+
+  /* Item styling */
+  .shop-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 350px; /* Default width for a single item */
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .shop-item:hover {
+    transform: scale(1.03);
+  }
+
+  /* Image styling */
+  .shop-image {
+    width: 100%; /* Ensure the image container fills the entire width */
+    height: 300px; /* Fixed height for the image */
+    margin: 0; /* Remove any default margins */
+    padding: 0; /* Remove padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Ensures the image fits inside the container */
+  }
+  
+  .shop-image img {
+    width: 100%; 
+    height: 100%; /* Ensure image height fills the container */
+    object-fit: cover; /* The image will cover the container's area, preserving its aspect ratio */
+  }
+
+  /* Title styling */
+  h3 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 10px 0 5px;
+    color: #333;
+  }
+
+  /* Price styling */
+  .price {
+    font-size: 13px;
+    color: #601846;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+
+  /* Button styling */
+  .shop-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #601846;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .shop-btn:hover {
+    background-color: #450f30;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .shop-container {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Smaller grid for mobile */
+      gap: 15px;
+    }
+
+    .shop-item {
+      padding: 10px;
+      max-width: 300px; /* Adjusts width for smaller screens */
+    }
+
+    .shop-image {
+      width: 100%; /* Image takes up full width */
+    }
+
+    h3 {
+      font-size: 12px;
+    }
+
+    .price {
+      font-size: 11px;
+    }
+
+    .shop-btn {
+      font-size: 11px;
+      padding: 6px 10px;
+    }
+  }
+</style>

@@ -1,0 +1,40 @@
+<div class="item-display-wrapper">
+  <div class="items-container">
+    {% for product in collections.all.products %}
+      {% if forloop.index <= 3 %}
+        <div class="item-card">
+          <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+          <h3>{{ product.title }}</h3>
+          <p class="price">{{ product.price | money }}</p>
+          <button onclick="addToCart('{{ product.id }}')">Add to Cart</button>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if collections.all.products.size > 3 %}
+    <div class="slider">
+      {% for product in collections.all.products offset: 3 %}
+        <div class="item-card">
+          <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+          <h3>{{ product.title }}</h3>
+          <p class="price">{{ product.price | money }}</p>
+          <button onclick="addToCart('{{ product.id }}')">Add to Cart</button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  function addToCart(productId) {
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: productId, quantity: 1 })
+    }).then(response => {
+      if (response.ok) alert('Item added to cart!');
+      else alert('Error adding item to cart.');
+    });
+  }
+</script>

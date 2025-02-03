@@ -1,0 +1,47 @@
+{% schema %}
+{
+  "name": "Custom Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Image",
+      "id": "image"
+    },
+    {
+      "type": "text",
+      "label": "Title",
+      "id": "title",
+      "default": "Your Title"
+    },
+    {
+      "type": "text",
+      "label": "Price",
+      "id": "price",
+      "default": "0.00"
+    },
+    {
+      "type": "url",
+      "label": "Button URL",
+      "id": "button_url",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "label": "Button Text",
+      "id": "button_text",
+      "default": "Shop Now"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="custom-section">
+  <div class="custom-section__image">
+    <img src="{{ settings.image | img_url: 'original' }}" alt="{{ settings.title }}">
+  </div>
+  <div class="custom-section__content">
+    <h2>{{ settings.title }}</h2>
+    <p class="custom-section__price">${{ settings.price }}</p>
+    <a href="{{ settings.button_url }}" class="custom-section__button">{{ settings.button_text }}</a>
+  </div>
+</div>
